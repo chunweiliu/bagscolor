@@ -16,8 +16,9 @@ Image::Image(std::string name) {
     std::cout << "Unsupported format" << std::endl;
     return;
   }
-  // retrieve meta data
+  // retrieve feature and meta data
   MiningTag();
+  ComputeFeature();
 }
 
 bool Image::Replace(std::string& str, const std::string& from,
@@ -49,6 +50,21 @@ void Image::MiningTag() {
   infile.close();
 }
 
-void Image::LoadImage() { std::ifstream infile(des) }
+void Image::ComputeFeature() {
+  cv::Mat image =
+      cv::imread(img_name_, 1);  // flag>0 Return a 3-channel color image
+  cv::Mat hsv_image;
+  cv::cvtColor(image, hsv_image, CV_BGR2HSV);
 
-void Image::ComputeFeature() { st }
+  const int hist_size[] = {10, 10, 10};
+  const int channels[] = {0, 1};
+  const float h_ranges[] = {0, 180};
+  const float s_ranges[] = {0, 256};
+  const float v_ranges[] = {0, 256};
+  const float* ranges[] = {h_ranges, s_ranges, v_ranges};
+  cv::calcHist(&hsv_image, sizeof(hsv_image) / sizeof(cv::Mat), channels,
+               cv::Mat(), feature_, sizeof(hist_size) / sizeof(int), hist_size,
+               ranges, true, false);
+}
+
+// void Image::ComputeFeature() { st }
