@@ -1,2 +1,9 @@
 # bagscolor
-Classifier for predicting bags' color
+A classifier for predicting bags' color
+
+### Prerequisites
+- OpenCV
+- Boost
+- CMake
+
+
