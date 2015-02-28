@@ -19,6 +19,7 @@ int main(int argc, char** argv) {
   BagsColor bags(dataset);
 
   Color color[5] = {kBlack, kBrown, kRed, kSilver, kGold};
+  // Color color[2] = {kBrown, kBrown};
   std::vector<RankList> ranks;
   for (int i = 0; i < 5; ++i) {
     ranks.push_back(bags.Rank(color[i], kNumQuery));

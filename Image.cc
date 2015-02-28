@@ -64,6 +64,7 @@ void Image::ComputeFeature() {
   // const float s_ranges[] = {0, 256};
   // const float v_ranges[] = {0, 256};
   // const float* ranges[] = {h_ranges, s_ranges, v_ranges};
+
   const int hist_size[] = {10, 10};  // Two chancel withour brightness info
   const int channels[] = {0, 1};
   const float h_ranges[] = {0, 180};

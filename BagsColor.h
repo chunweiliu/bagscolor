@@ -29,14 +29,16 @@ class BagsColor {
   cv::Ptr<cv::ml::TrainData> GetTrainData() const { return training_data_; }
   cv::Ptr<cv::ml::SVM> GetSVM() const { return svm_; }
 
-  cv::Mat Image2Mat(const std::vector<Image>&) const;
+  cv::Mat Image2X(const std::vector<Image>&) const;
+  cv::Mat Image2y(const std::vector<Image>&, const Color&) const;
 
-  void PrepareTrainData(Color);
-  RankList Rank(Color, int);
+  void PrepareTrainData(const Color&);
+  RankList Rank(const Color&, int);
   int SeparateSet();
-  void Train(Color);
+  void Train(const Color&);
 
-  void VisRank();
+  float CrossValidation(int, const cv::ml::SVM::Params&, const Color&);
+  float Error(const cv::Mat&, const cv::Mat&);
 };
 
 #endif  // BAGS_COLOR_H_
