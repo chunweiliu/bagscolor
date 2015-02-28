@@ -51,20 +51,28 @@ void Image::MiningTag() {
 }
 
 void Image::ComputeFeature() {
+  // Convert image from BGR to HSV
   cv::Mat image =
       cv::imread(img_name_, 1);  // flag>0 Return a 3-channel color image
   cv::Mat hsv_image;
   cv::cvtColor(image, hsv_image, CV_BGR2HSV);
 
-  const int hist_size[] = {10, 10, 10};
+  // Compute HSV color histogram
+  // const int hist_size[] = {10, 10, 10};
+  // const int channels[] = {0, 1, 2};
+  // const float h_ranges[] = {0, 180};
+  // const float s_ranges[] = {0, 256};
+  // const float v_ranges[] = {0, 256};
+  // const float* ranges[] = {h_ranges, s_ranges, v_ranges};
+  const int hist_size[] = {10, 10};  // Two chancel withour brightness info
   const int channels[] = {0, 1};
   const float h_ranges[] = {0, 180};
   const float s_ranges[] = {0, 256};
-  const float v_ranges[] = {0, 256};
-  const float* ranges[] = {h_ranges, s_ranges, v_ranges};
+  const float* ranges[] = {h_ranges, s_ranges};
+
   cv::calcHist(&hsv_image, sizeof(hsv_image) / sizeof(cv::Mat), channels,
                cv::Mat(), feature_, sizeof(hist_size) / sizeof(int), hist_size,
                ranges, true, false);
+  feature_ /= hsv_image.rows * hsv_image.cols;  // normalize histogram with
+                                                // size
 }
-
-// void Image::ComputeFeature() { st }

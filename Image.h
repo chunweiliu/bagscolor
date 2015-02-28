@@ -22,10 +22,10 @@ class Image {
  public:
   Image(std::string);
 
-  std::string GetDescrName() { return descr_name_; }
-  std::string GetImgName() { return img_name_; }
-  Color GetTag() { return tag_; }
-  cv::Mat GetFeature() { return feature_; }
+  std::string GetDescrName() const { return descr_name_; }
+  std::string GetImgName() const { return img_name_; }
+  Color GetTag() const { return tag_; }
+  cv::MatND GetFeature() const { return feature_; }
   // cv::Mat GetImage() { return image_; }
 
   Color HasColor(std::string);
@@ -35,4 +35,4 @@ class Image {
   void ComputeFeature();
 };
 
-#endif
+#endif  // IMAGE_H_

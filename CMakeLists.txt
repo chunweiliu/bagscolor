@@ -17,5 +17,5 @@ find_package(OpenCV REQUIRED)
 include_directories(${OpenCV_INCLUDE_DIRS})
 
 # Sources and libraries for the compiler
-add_executable(${ProjectName} ${ProjectName}.cc BagsColor.cc Image.cc)
+add_executable(${ProjectName} ${ProjectName}.cc BagsColor.cc Image.cc Img2Html.cc)
 target_link_libraries(${ProjectName} ${OpenCV_LIBS} ${Boost_LIBRARIES})
