@@ -14,19 +14,19 @@ int main(int argc, char** argv) {
 
   std::string dataset(argv[1]);
   std::string output_file(argv[2]);
-  const int num_query = atoi(argv[3]);
+  const int kNumQuery = atoi(argv[3]);
 
   BagsColor bags(dataset);
 
   Color color[5] = {kBlack, kBrown, kRed, kSilver, kGold};
   std::vector<RankList> ranks;
   for (int i = 0; i < 5; ++i) {
-    ranks.push_back(bags.Rank(color[i], num_query));
+    ranks.push_back(bags.Rank(color[i], kNumQuery));
   }
 
   Img2Html html;
-  const int height = 100;
+  const int kHeight = 100;
   html.SetFilename(output_file);
   html.SetLists(ranks);
-  html.PrintLists(height);
+  html.PrintLists(kHeight);
 }
