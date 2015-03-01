@@ -12,35 +12,48 @@ Bags image/text description used for this demo program can be found at http://ww
 
 ### Compile and run in command line
 
-1. Download the repository
+1. Download the dataset to your working directory
+		
+		wget http://www.tamaraberg.com/teaching/Spring_15/hw/hw2/bags.tar.gz
+		
+2. Unzip the file
+
+		tar -zxvf bags.tar.gz
+
+2. Download the repository
 
         git clone https://github.com/chunweiliu/bagscolor
-2. Compile the source code
+        
+3. Compile the source code
         
         cd bagscolor && mkdir build && cd build && cmake .. && make
-3. Run the demo program
+        
+4. Run the demo program
 
-        ./demo <dataset> <output_html> <kNumQuery>
+        ./demo ../../bags result.html 200
 
-Here is an expected result for top 5 queries of the five color attributes: black, brown, red, silver, gold, associated with their information of [rank]: score
+Here is an expected result for top 5 queries of the five color attributes: black, brown, red, silver, gold, associated with their meta data ([rank]: score)
 ![results](images/bags_5x5_5cv.png)
 
 ## Overview of the program
-1. Mining image color tags using text description
-2. Based on the tags from the previous step, separating the dataset to training and test set: Each training image would have one and only one tag, each test image would not contain any tag information.
-3. Computing HSV color histogram for each image in training set
-4. Training SVM (RBF) using the histogram from the training set
-5. Indexing the test set using the visual information
+1. Mining the image color tag to six different category: black, brown, red, silver, gold, and unknown, for the entire image set using the text description of each image
+2. Separating the dataset to training and test set based on the mining results: The images associated with color tags are in the training set, the rest of images are in the testing set.
+3. Computing HSV color histogram for each image as feature in training set (this program only used HS color histogram)
+4. Training a binary SVM for each color attribute, total five SVMs
+5. Applying each SVM on the test for five different color attributes 
 6. Printing the result to a HTML page
 
 ### Cross-validation for the RBF Kernel
 ![rbf](images/rbf.png)
 
 The sigma is important to the radial basis function (RBF) kernel.
-The sigma can be determined by cross-validation.
-Without cross-validation to choose an optimal sigma, the system can still retrieve reasonable result, such as:
+The sigma can be determined using cross-validation.
+This program performed a 5-fold cross-validation.
+Without choosing an optimal sigma properly, for example, with a abitary sigma=3, the system still retrieved reasonable result, such as:
 ![results](images/bags_5x5.png)
-But you might see many artifacts here.
-For example, the first column for the black attribute has some silver color purses.
-Moreover, the fourth column for the silver attribute has a red bag and a brown bag.
-Although the "background" of these two bags are silver, but it is unreasonable to say these two are the top 5.
+But the result is far as good as the expected one.
+For instance, the first column for the black attribute has some silver color purses.
+Moreover, the fourth column for the silver attribute has a white bag, a red bag, and a brown bag.
+This artifact might cased by the "background" of these three images are silver.
+Having these artifacts in the top 5 lists is not good.
+Cross-validation helps us improve the result.
