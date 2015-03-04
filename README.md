@@ -63,8 +63,8 @@ I searched 20 `sigma`s, from 2^-10 to 2^9.
 The classification results did not change for `sigma` equals to 2^-10 to 2^-2.
 Here is the classification error in percentage table of the five different labels (only shows `sigma` from 2^-1 to 2^9)
 
-| log`sigma` | black | brown  | red    | silver  | gold |
-| ---------- |:-----:|:------:|:------:|:-------:|:----:|
+| log`sigma` | black | brown  | red    | silver  | gold 
+| ---------- |:-----:|:------:|:------:|:-------:|:----:
 | -1         | 58.4  | 70     | 70     | 70      | 70
 | 0          | 36    | 70     | 70     | 70      | 69.8
 | 1          | **33**| 70     | 70     | 70      | 68.4
@@ -76,6 +76,7 @@ Here is the classification error in percentage table of the five different label
 | 7          | 43.2  | 70     | 68.6   | 68      | 64.6
 | 8          | 48    | 69.6   | 69     | 68.4    | 65.8
 | 9          | 53.6  | 69.8   | 69.2   | 68.8    | 67.6
+| Best log`sigma`| 1 | 4      | 5      | 4       | 3
 
 The classification error seems high.
 I chose the `sigma` with the lowest error rate for each classifier.
