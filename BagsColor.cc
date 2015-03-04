@@ -87,12 +87,18 @@ void BagsColor::Train(const Color& color) {
   params.kernelType = cv::ml::SVM::RBF;
   // params.gamma = 3;
 
-  float gammas[20] = {1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1e0, 1e1, 1e2, 1e3, 1e4,
-                      1e5,  2,    4,    8,    16,   32,  64,  128, 256, 512};
+  // float gammas[20] = {1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1e0, 1e1, 1e2, 1e3, 1e4,
+  // 1e5,  2,    4,    8,    16,   32,  64,  128, 256, 512};
+  int kNumGammas = 20;
+  float gammas[kNumGammas];
+  for (int i = 0; i < kNumGammas; ++i) {
+    gammas[i] = pow(2, i - kNumGammas / 2);
+  }
+
   // float gammas[2] = {1, 3};
   float best_gamma = gammas[0], best_error = 100.0;
   const int kFold = 5;
-  for (int i = 0; i < 20; ++i) {
+  for (int i = 0; i < kNumGammas; ++i) {
     params.gamma = gammas[i];
     float error = CrossValidation(
         kFold, params,
