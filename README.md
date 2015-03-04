@@ -32,7 +32,7 @@ Bags image/text description used for this demo program can be found at http://ww
 
         ./demo ../../bags result.html 200
 
-Here is an expected result for top 5 queries of the five color attributes: black, brown, red, silver, gold, associated with their meta data ([rank]: score)
+Here is an expected result for top 5 queries of the five color attributes: black, brown, red, silver, gold, associated with their meta data ([rank]: score):
 ![results](images/bags_5x5_5cv.png)
 
 ## Overview of the program
@@ -46,14 +46,49 @@ Here is an expected result for top 5 queries of the five color attributes: black
 ### Cross-validation for the RBF Kernel
 ![rbf](images/rbf.png)
 
-The sigma is important to the radial basis function (RBF) kernel.
+The sigma is important to the radial basis function (RBF) kernel (as the formula shown above).
 The sigma can be determined using cross-validation.
 This program performed a 5-fold cross-validation.
 Without choosing an optimal sigma properly, for example, with a abitary sigma=3, the system still retrieved reasonable result, such as:
 ![results](images/bags_5x5.png)
-But the result is far as good as the expected one.
+
+Yet, the result is far as good as the expected one.
 For instance, the first column for the black attribute has some silver color purses.
 Moreover, the fourth column for the silver attribute has a white bag, a red bag, and a brown bag.
 This artifact might cased by the "background" of these three images are silver.
 Having these artifacts in the top 5 lists is not good.
-Cross-validation helps us improve the result.
+Cross-validation helps to improve the result.
+
+I searched 20 `sigma`s. Here is the classification error in percentage table of the five different labels.
+The classification error seems high.
+Yet when I look at the output result, the ranking seems pretty reasonable.
+
+| log`sigma` | black | brown  | red    | silver  | gold |
+| ---------- |:-----:|:------:|:------:|:-------:|:----:|
+| -10        | 70    | 70     | 70     | 70      | 70
+| -9         | 70    | 70     | 70     | 70      | 70 
+| -8         | 70    | 70     | 70     | 70      | 70
+| -7         | 70    | 70     | 70     | 70      | 70
+| -6         | 70    | 70     | 70     | 70      | 70
+| -5         | 70    | 70     | 70     | 70      | 70
+| -4         | 70    | 70     | 70     | 70      | 70
+| -3         | 70    | 70     | 70     | 70      | 70
+| -2         | 70    | 70     | 70     | 70      | 70
+| -1         | 58.4  | 70     | 70     | 70      | 70
+| 0          | 36    | 70     | 70     | 70      | 69.8
+| 1          | **33**| 70     | 70     | 70      | 68.4
+| 2          | 33.6  | 70     | 69.4   | 70      | 65.2
+| 3          | 37    | 69.8   | 67.8   | 69.2    |**63.6**
+| 4          | 39.2  |**69.6**| 67.8   |**67.4** | 63.6
+| 5          | 40.8  | 69.6   |**67.6**| 67.4    | 64
+| 6          | 40.8  | 69.6   | 67.8   | 67.4    | 64.4
+| 7          | 43.2  | 70     | 68.6   | 68      | 64.6
+| 8          | 48    | 69.6   | 69     | 68.4    | 65.8
+| 9          | 53.6  | 69.8   | 69.2   | 68.8    | 67.6
+
+### Precision vs. number of query
+![precision](images/precision.png)
+This curve shows how much the top `k` queries are relevant (positive) to the color attribute.
+Since we don't have ground truth labeling for the test data, I judged the result pretty subjectively.
+The precision drops when increasing the query number.
+Metal colors, such as silver and gold, dropped significant faster than the the nonmetal colors.
