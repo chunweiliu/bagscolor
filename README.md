@@ -78,7 +78,7 @@ Here is the classification error in percentage table of the five different label
 | 9          | 53.6  | 69.8   | 69.2   | 68.8    | 67.6
 
 The classification error seems high.
-I chose the `sigma` with the lowest error rates for each classifier.
+I chose the `sigma` with the lowest error rate for each classifier.
 Yet when I look at the output result, the ranking seems pretty reasonable.
 
 
