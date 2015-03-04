@@ -59,21 +59,12 @@ This artifact might cased by the "background" of these three images are silver.
 Having these artifacts in the top 5 lists is not good.
 Cross-validation helps to improve the result.
 
-I searched 20 `sigma`s. Here is the classification error in percentage table of the five different labels.
-The classification error seems high.
-Yet when I look at the output result, the ranking seems pretty reasonable.
+I searched 20 `sigma`s, from 2^-10 to 2^9. 
+The classification results did not change for `sigma` equals to 2^-10 to 2^-2.
+Here is the classification error in percentage table of the five different labels (only shows `sigma` from 2^-1 to 2^9)
 
 | log`sigma` | black | brown  | red    | silver  | gold |
 | ---------- |:-----:|:------:|:------:|:-------:|:----:|
-| -10        | 70    | 70     | 70     | 70      | 70
-| -9         | 70    | 70     | 70     | 70      | 70 
-| -8         | 70    | 70     | 70     | 70      | 70
-| -7         | 70    | 70     | 70     | 70      | 70
-| -6         | 70    | 70     | 70     | 70      | 70
-| -5         | 70    | 70     | 70     | 70      | 70
-| -4         | 70    | 70     | 70     | 70      | 70
-| -3         | 70    | 70     | 70     | 70      | 70
-| -2         | 70    | 70     | 70     | 70      | 70
 | -1         | 58.4  | 70     | 70     | 70      | 70
 | 0          | 36    | 70     | 70     | 70      | 69.8
 | 1          | **33**| 70     | 70     | 70      | 68.4
@@ -86,8 +77,13 @@ Yet when I look at the output result, the ranking seems pretty reasonable.
 | 8          | 48    | 69.6   | 69     | 68.4    | 65.8
 | 9          | 53.6  | 69.8   | 69.2   | 68.8    | 67.6
 
+The classification error seems high.
+Yet when I look at the output result, the ranking seems pretty reasonable.
+
+
 ### Precision vs. number of query
 ![precision](images/precision.png)
+
 This curve shows how much the top `k` queries are relevant (positive) to the color attribute.
 Since we don't have ground truth labeling for the test data, I judged the result pretty subjectively.
 The precision drops when increasing the query number.
