@@ -49,9 +49,9 @@ This program performed a 5-fold cross-validation.
 
 Here is the result for top 5 queries of the five color attributes: black, brown, red, silver, gold, associated with their meta data ([rank]: score) using RBF Kernel with a 5-fold cross-validation:
 
--> ![results](images/RBF_bags_cv.png) <-
+**Top five lists from the RBF SVM with 5-fold cross-validation**:
 
--> **Top five lists from the RBF SVM with 5-fold cross-validation** <-
+![results](images/RBF_bags_cv.png)
 
 I searched 20 `sigma`s, from 2^-10 to 2^9. 
 The classification results did not change for `sigma` equals to 2^-10 to 2^-2.
@@ -82,9 +82,9 @@ Yet when I look at the output result, the ranking seems pretty reasonable.
 
 Without choosing an optimal sigma properly, for example, with a abitary sigma=3, the system still retrieved reasonable result, such as:
 
--> ![results](images/RBF_bags.png) <-
+**Top five lists from the RBF SVM with `sigma=3`**:
 
--> **Top five lists from the RBF SVM with `sigma=3`** <-
+![results](images/RBF_bags.png)
 
 Yet, the result is far as good as the expected one.
 For instance, the first column for the black attribute has some silver color purses.
@@ -96,25 +96,24 @@ Cross-validation helps to improve the result.
 Using linear kernel without cross-validation is another choice.
 It performs well on nonmetal colors, but has troubles on metal colors as well.
 There is even no a single silver image in the top five list retrieved from the linear SVM classifier for silver color.
-Here is the result of using linear SVM:
 
--> ![results](images/linear_bags.png) <-
+**Top five lists from the linear SVM**:
 
--> **Top five lists from the linear SVM** <-
+![results](images/linear_bags.png)
 
 
 ### Precision vs. number of query
 The precision curve shows how much the top `k` queries are relevant (positive) to the color attribute.
 Since we don't have ground truth labeling for the test data, I judged the result pretty subjectively.
 
--> ![RBF precision](images/RBF_precision.png) <-
+![RBF precision](images/RBF_precision.png)
 
 The first figure of the precision curves is for the classifiers using the 5-fold cross-validation on RBF kernel.
 The precision drops when increasing the query number `k`.
 Metal colors, such as silver and gold, dropped significant faster than the the nonmetal colors.
 The silver is even worse due because many bag images have gray background, which is pretty similar to silver in the H-S domain.
 
--> ![Linear precision](images/linear_precision.png) <-
+![Linear precision](images/linear_precision.png)
 
 The second figure of the precision curves is for the linear SVM.
 The precision drops when increasing the query number `k`.
@@ -122,7 +121,7 @@ Metal colors, such as silver and gold, dropped significant faster than the the n
 The silver is too bad on this case.
 Probably the cases with gray background ruined the linear SVM.
 
--> ![precision](images/precision.png) <-
+![precision](images/precision.png)
 
 Let's try to overlap the two figures.
 The bolder curves are from the RBF figure and the thiner curves are from the linear figure.
