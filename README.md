@@ -107,20 +107,23 @@ Here is the result of using linear SVM:
 The precision curve shows how much the top `k` queries are relevant (positive) to the color attribute.
 Since we don't have ground truth labeling for the test data, I judged the result pretty subjectively.
 
-![RBF precision](images/RBF_precision.png)
+-> ![RBF precision](images/RBF_precision.png) <-
+
 The first figure of the precision curves is for the classifiers using the 5-fold cross-validation on RBF kernel.
 The precision drops when increasing the query number `k`.
 Metal colors, such as silver and gold, dropped significant faster than the the nonmetal colors.
 The silver is even worse due because many bag images have gray background, which is pretty similar to silver in the H-S domain.
 
-![Linear precision](images/linear_precision.png)
+-> ![Linear precision](images/linear_precision.png) <-
+
 The second figure of the precision curves is for the linear SVM.
 The precision drops when increasing the query number `k`.
 Metal colors, such as silver and gold, dropped significant faster than the the nonmetal colors.
 The silver is too bad on this case.
 Probably the cases with gray background ruined the linear SVM.
 
-![precision](images/precision.png)
+-> ![precision](images/precision.png) <-
+
 Let's try to overlap the two figures.
 The bolder curves are from the RBF figure and the thiner curves are from the linear figure.
 
