@@ -85,10 +85,8 @@ void BagsColor::Train(const Color& color) {
   cv::ml::SVM::Params params;
   params.svmType = cv::ml::SVM::C_SVC;
   params.kernelType = cv::ml::SVM::RBF;
-  // params.gamma = 3;
+  // params.kernelType = cv::ml::SVM::LINEAR;
 
-  // float gammas[20] = {1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1e0, 1e1, 1e2, 1e3, 1e4,
-  // 1e5,  2,    4,    8,    16,   32,  64,  128, 256, 512};
   int kNumGammas = 20;
   float gammas[kNumGammas];
   for (int i = 0; i < kNumGammas; ++i) {
