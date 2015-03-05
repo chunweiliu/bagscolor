@@ -32,9 +32,6 @@ Bags image/text description used for this demo program can be found at http://ww
 
         ./demo ../../bags result.html 200
 
-Here is an expected result for top 5 queries of the five color attributes: black, brown, red, silver, gold, associated with their meta data ([rank]: score):
-![results](images/bags_5x5_5cv.png)
-
 ## Overview of the program
 1. Mining the image color tag to six different category: black, brown, red, silver, gold, and unknown, for the entire image set using the text description of each image
 2. Separating the dataset to training and test set based on the mining results: The images associated with color tags are in the training set, the rest of images are in the testing set.
@@ -49,19 +46,18 @@ Here is an expected result for top 5 queries of the five color attributes: black
 The sigma is important to the radial basis function (RBF) kernel (as the formula shown above).
 The sigma can be determined using cross-validation.
 This program performed a 5-fold cross-validation.
-Without choosing an optimal sigma properly, for example, with a abitary sigma=3, the system still retrieved reasonable result, such as:
-![results](images/bags_5x5.png)
 
-Yet, the result is far as good as the expected one.
-For instance, the first column for the black attribute has some silver color purses.
-Moreover, the fourth column for the silver attribute has a white bag, a red bag, and a brown bag.
-This artifact might cased by the "background" of these three images are silver.
-Having these artifacts in the top 5 lists is not good.
-Cross-validation helps to improve the result.
+Here is the result for top 5 queries of the five color attributes: black, brown, red, silver, gold, associated with their meta data ([rank]: score) using RBF Kernel with a 5-fold cross-validation:
+
+-> ![results](images/RBF_bags_cv.png) <-
+
+-> **Top five lists from the RBF SVM with 5-fold cross-validation** <-
 
 I searched 20 `sigma`s, from 2^-10 to 2^9. 
 The classification results did not change for `sigma` equals to 2^-10 to 2^-2.
 Here is the classification error in percentage table of the five different labels (only shows `sigma` from 2^-1 to 2^9)
+
+**5-fold cross-validation error rates for the RBF SVM**
 
 | log`sigma` | black | brown  | red    | silver  | gold 
 | ---------- |:-----:|:------:|:------:|:-------:|:----:
@@ -78,15 +74,64 @@ Here is the classification error in percentage table of the five different label
 | 9          | 53.6  | 69.8   | 69.2   | 68.8    | 67.6
 | Best log`sigma`| 1 | 4      | 5      | 4       | 3
 
+
+
 The classification error seems high.
 I chose the `sigma` with the lowest error rate for each classifier.
 Yet when I look at the output result, the ranking seems pretty reasonable.
 
+Without choosing an optimal sigma properly, for example, with a abitary sigma=3, the system still retrieved reasonable result, such as:
+
+-> ![results](images/RBF_bags.png) <-
+
+-> **Top five lists from the RBF SVM with `sigma=3`** <-
+
+Yet, the result is far as good as the expected one.
+For instance, the first column for the black attribute has some silver color purses.
+Moreover, the fourth column for the silver attribute has a white bag, a red bag, and a brown bag.
+This artifact might cased by the background of these three images are gray, very is very similar to silver.
+Having these artifacts in the top 5 lists is not good.
+Cross-validation helps to improve the result.
+
+Using linear kernel without cross-validation is another choice.
+It performs well on nonmetal colors, but has troubles on metal colors as well.
+There is even no a single silver image in the top five list retrieved from the linear SVM classifier for silver color.
+Here is the result of using linear SVM:
+
+-> ![results](images/linear_bags.png) <-
+
+-> **Top five lists from the linear SVM** <-
+
 
 ### Precision vs. number of query
-![precision](images/precision.png)
-
-This curve shows how much the top `k` queries are relevant (positive) to the color attribute.
+The precision curve shows how much the top `k` queries are relevant (positive) to the color attribute.
 Since we don't have ground truth labeling for the test data, I judged the result pretty subjectively.
-The precision drops when increasing the query number.
+
+![RBF precision](images/RBF_precision.png)
+The first figure of the precision curves is for the classifiers using the 5-fold cross-validation on RBF kernel.
+The precision drops when increasing the query number `k`.
 Metal colors, such as silver and gold, dropped significant faster than the the nonmetal colors.
+The silver is even worse due because many bag images have gray background, which is pretty similar to silver in the H-S domain.
+
+![Linear precision](images/linear_precision.png)
+The second figure of the precision curves is for the linear SVM.
+The precision drops when increasing the query number `k`.
+Metal colors, such as silver and gold, dropped significant faster than the the nonmetal colors.
+The silver is too bad on this case.
+Probably the cases with gray background ruined the linear SVM.
+
+![precision](images/precision.png)
+Let's try to overlap the two figures.
+The bolder curves are from the RBF figure and the thiner curves are from the linear figure.
+
+For the black and brown colors, there is no significant different between the two curves when `k` is small.
+When `k` is larger than 100, SVM with RBF kernel performed better than the linear kernel.
+
+For the red color, SVM with linear kernel performed much better than the the RBF kernel.
+Based on my observation from the retrieval result, the SVM with RBF kernel rank bags with red pattens, such as stripes or followers, on the top.
+But I would not consider those are "red bags".
+On the other hand, linear SVM rank bags with pure colors on the top.
+Even though some of them are not "pure red" (e.g. pink), as a shopper, I consider those bags are more closed to what I want.
+
+Both SVM performed bad in the metal color cases.
+One reason might be I only implemented the HS color histogram, and metal colors typically have lighten appearance.
