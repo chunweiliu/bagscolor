@@ -88,6 +88,7 @@ Let's now try the linear kernel:
 
 The linear kernel performed well on nonmetal colors, but had troubles on metal colors.
 There is even no one silver image in the top five list retrieved from the linear SVM for silver color.
+The entire 200 ranked lists is in the file "result/LINEAR.html".
 
 ### Precision vs. number of query
 The precision curve shows how much the top `k` queries are relevant to the color attribute.
