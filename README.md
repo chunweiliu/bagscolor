@@ -1,5 +1,5 @@
 # bagscolor
-A demo program of a retrieval system based on colors
+A demo program of an image retrieval system using color attributes
 
 ## How to run this program?
 ### Prerequisites
@@ -8,29 +8,21 @@ A demo program of a retrieval system based on colors
 - CMake
 
 ### Data
-Bags image/text description used for this demo program can be found at http://www.tamaraberg.com/teaching/Spring_15/hw/hw2/bags.tar.gz
+The bag images and text descriptions in the data folder was downloaded at http://www.tamaraberg.com/teaching/Spring_15/hw/hw2/bags.tar.gz
 
 ### Compile and run in command line
 
-1. Download the dataset to your working directory
-		
-		wget http://www.tamaraberg.com/teaching/Spring_15/hw/hw2/bags.tar.gz
-		
-2. Unzip the file
-
-		tar -zxvf bags.tar.gz
-
-2. Download the repository
+1. Download the repository
 
         git clone https://github.com/chunweiliu/bagscolor
         
-3. Compile the source code
+2. Compile the source code
         
         cd bagscolor && mkdir build && cd build && cmake .. && make
         
-4. Run the demo program
+3. Run the demo program
 
-        ./demo ../../bags result.html 200
+        ./demo ../data results/result.html 200
 
 ## Overview of the program
 1. Mining the image color tag to six different category: black, brown, red, silver, gold, and unknown, for the entire image set using the text description of each image
