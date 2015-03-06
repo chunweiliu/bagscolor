@@ -17,7 +17,6 @@ class Image {
   Color tag_ = kNull;
 
   cv::MatND feature_;
-  // cv::Mat image_;
 
  public:
   Image(std::string);

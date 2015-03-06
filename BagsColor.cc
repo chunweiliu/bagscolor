@@ -152,11 +152,6 @@ float BagsColor::CrossValidation(int fold, const cv::ml::SVM::Params& params,
 
     svm->predict(test_X, predict_y);
     error += (float)Error(test_y, predict_y);
-
-    // std::cout << test_y << predict_y << std::endl;
-    // std::cout << error << std::endl;
-    // cv::waitKey(0);
-    // std::cout << "fold " << i + 1 << ": " << error << std::endl;
   }
   return error / (float)fold;
 }
@@ -165,7 +160,6 @@ float BagsColor::Error(const cv::Mat& y1, const cv::Mat& y2) {
   float error = 0;
   for (int i = 0; i < y1.rows; ++i) {
     if (abs(y1.at<float>(i) - y2.at<float>(i)) > 0.1) {
-      // std::cout << y1.at<float>(i) << " " << y2.at<float>(i) << std::endl;
       error++;
     }
   }
